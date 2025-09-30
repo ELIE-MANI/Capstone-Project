@@ -18,7 +18,4 @@ function NavBar() {
    );
 }
 
-export default NavB
-
-
-ar;
+export default NavBar;
