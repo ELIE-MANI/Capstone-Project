@@ -1,4 +1,7 @@
 import { create } from "zustand";
+import axios from "axios";
+
+
 
 const useProfileStore = create((set) => ({
     profile: {
@@ -17,5 +20,8 @@ const useProfileStore = create((set) => ({
   
 
 }))
+
+
+
 
 export default useProfileStore;
