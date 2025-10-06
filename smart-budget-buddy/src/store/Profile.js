@@ -1,7 +1,14 @@
 import { create } from "zustand";
 
 const useProfileStore = create((set) => ({
-  profile:{},
+    profile: {
+    avatar: "", 
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  },
+
   setProfile: (profile) => set({ profile}),
   updateProfile: (field,value) =>
     set((state) => ({

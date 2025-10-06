@@ -1,4 +1,4 @@
-const API_URL ='https://stub.muindetuva.com/api/profiles';
+const API_URL ='https://stub.muindetuva.com/api/Profile';
 
 export async function getProfiles() {
   const response = await fetch(API_URL, {
