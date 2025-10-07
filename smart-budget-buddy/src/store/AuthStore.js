@@ -11,3 +11,5 @@ const useAuthStore = create((set) => ({
     set({user:null});
   }
 }));
+
+export default useAuthStore;
