@@ -4,7 +4,7 @@ nav{
   background-color: #00D09E;
   
 }
-:root {
+@theme {
   --color-primary: #00D09E;
 }
 

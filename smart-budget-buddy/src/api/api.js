@@ -10,18 +10,15 @@ export async function getProfiles() {
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
-  const data = await response.json();
-  return data;
+  return response.json();
 }
 
-// Save profile (create or update)
+// Save profile (create )
 
-export async function saveProfile(profile, id) {
-  const method = id ? 'PUT' : 'POST';
-  const url = id ? `${API_URL}/${id}` : API_URL;
-
-  const response = await fetch(url, {
-    method,
+export async function saveProfile(profile) {
+ 
+  const response = await fetch(API_URL, {
+    method:'POST',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer 17|OAkvhOPYN4VRJL2SkcnAzW3PvzyzYI4r4bYBklXoe6f28b04`,
@@ -29,10 +26,14 @@ export async function saveProfile(profile, id) {
     body: JSON.stringify(profile),
   });
 
+   console.log('Response status:', response.status);
+  console.log('Response body:', await response.text());
+
+
   if (!response.ok) {
     throw new Error('Failed to save profile');
   }
-  const data = await response.json();
-  return data;
+  return response.json();
+
 }
 
