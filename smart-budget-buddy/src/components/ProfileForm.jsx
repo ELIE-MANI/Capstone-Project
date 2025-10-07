@@ -11,6 +11,7 @@ function ProfileForm() {
   mutationFn: saveProfile,
   onSuccess: () => {
     queryClient.invalidateQueries(["profile"]);
+    alert("Profile updated successfully!");
   }
  });
 
