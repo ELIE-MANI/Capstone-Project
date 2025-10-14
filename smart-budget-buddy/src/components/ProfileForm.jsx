@@ -12,12 +12,16 @@ function ProfileForm() {
   onSuccess: () => {
     queryClient.invalidateQueries(["profile"]);
     alert("Profile updated successfully!");
-  }
- });
+  },
+  onError: (error) => {
+    alert("Error updating profile: " + error.message);
+  },
+});
 
   const handleUpdate = () => {
    console.log('Updating profile:', profile);
     mutation.mutate(profile);
+    
   };
 
   return (
