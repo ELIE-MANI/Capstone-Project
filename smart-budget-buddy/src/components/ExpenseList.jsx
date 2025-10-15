@@ -1,17 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
-import { getExpenses } from "../api/apiExpenses";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteExpenses, getExpenses } from "../api/apiExpenses";
 
 
-function ExpenseList({onDelete,onEdit}) {
+function ExpenseList({onEdit}) {
   const {data, isLoading, isError} = useQuery({
     queryKey: ["expenses"],
     queryFn: getExpenses,
+    refetchOnWindowFocus: false,
+  });
+  const queryClient = useQueryClient();
+  const deleteMutation =useMutation({
+    mutationFn:deleteExpenses,
+    onSuccess:() => {
+      queryClient.invalidateQueries(['expenses'])
+    }
   });
 
   if (isLoading) return <div>Loading Expenses...</div>;
   if (isError) return <div>Error loading expenses.</div>;
 
-  const expenses = data?.data || [];
+  const expenses = data || [];
 
   return (
     <>
@@ -29,10 +37,14 @@ function ExpenseList({onDelete,onEdit}) {
              </div>
              <div className="space-x-0.5">
              <button className="bg-yellow-500 text-white px-3 py-1 rounded"
-               onClick={() => onEdit(expense)}
+               onClick={() => onEdit(expense.id)}
              >Edit</button>
              <button className="bg-red-500 text-white px-3 py-1 rounded"
-             onClick={() => onDelete(expense)}
+             onClick={() => {
+              if(confirm("Are you sure you want to delete this expense?")){
+                deleteMutation.mutate(expense.id)
+              }
+             }}
              >
               Delete
              </button>

@@ -53,7 +53,7 @@ const handleSubmit = (e) => {
     required
     />
     <input 
-    type="text"
+    type="number"
     name="amount"
     placeholder="Enter Amount"
     value={expenses.amount}

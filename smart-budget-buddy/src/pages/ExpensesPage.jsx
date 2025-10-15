@@ -2,39 +2,31 @@ import { useState } from "react";
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import useProfileStore from "../store/Profile";
+import { useQuery } from "@tanstack/react-query";
+import { getExpenses } from "../api/apiExpenses";
 
 function ExpensesPage() {
-const[expenses,setExpenses] = useState([]);
 const {profile} = useProfileStore();
+const {data,isLoading,isError,refetch} = useQuery({
+  queryKey:['expenses'],
+  queryFn: getExpenses
+}); 
 
-const handleAddExpense = (newExpense) => {
-  setExpenses((prev) => [...prev, newExpense])
-};
-const handleDelete = (id) => {
-  if (confirm("Are you sure you want to delete this expense?")){
-    setExpenses((prev) => prev.filter((expense) => expense.id !== id ))
-  }
-};
-const handleEdit = (expense) => {
-  console.log("Edit clicked for:", expense);
-};
+const expenses =data || [];
+
 
 const totalSpent = expenses.reduce((sum,expense) => sum + Number(expense.amount), 0);
 const  remaining = profile?.monthlyBudget
 ? profile.monthlyBudget - totalSpent : 0;
 
-
+if(isLoading) return <div>Loading Expenses....</div>
+if(isError) return <div>Error loadinf=g expenses...</div>
   return ( 
     <>
     <div className="min-h-screen bg-gray-50 p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Expense Tracker</h1>
-     <ExpenseForm onAdd={handleAddExpense} />
-     <ExpenseList
-     expenses= {expenses}
-     onDelete={handleDelete}
-     onEdit={handleEdit}
-     
-     />
+     <ExpenseForm onSuccess={refetch} />
+     <ExpenseList expenses={expenses} onSuccess={refetch}/>
      <div className="mt-6 p-4 bg-blue-50 rounded">
       <p className="text-lg font-semibold"
       >Total Monthly Spending: {totalSpent.toLocaleString()} RWF </p>
