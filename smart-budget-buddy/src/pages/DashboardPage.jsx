@@ -1,7 +1,9 @@
+import HeroSection from "../components/HeroSection";
+
 function DashboardPage() {
   return ( 
     <>
-    <h1>Dashboard Page</h1>
+    <HeroSection/>
     </>
    );
 }
