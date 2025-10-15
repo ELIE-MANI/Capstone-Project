@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteExpenses, getExpenses } from "../api/apiExpenses";
+import iconSalary from "../images/Icon Salary.svg"
 
 
 function ExpenseList({onEdit}) {
@@ -23,7 +24,7 @@ function ExpenseList({onEdit}) {
 
   return (
     <>
-      <div className="max-w-md mx-auto mt-6 bg-white rounded-xl shadow-md p-4 ">
+      <div className="max-w-md mx-auto mt-6 w-300 bg-white rounded-xl shadow-md p-4 ">
         <h2 className="text-lg font-bold mb-3">My Expenses</h2>
         {expenses.length === 0 ? 
        (<p>No expense yet.</p>) :
@@ -31,11 +32,13 @@ function ExpenseList({onEdit}) {
           {expenses.map((expense) => (
             <li key={expense.id} className="flex justify-between items-center border-b py-2">
              <div>
+              <div className="flex justify-between items-center">
               <p className="font-semibold">{expense.title}</p>
+              </div>
               <p className="font-bold text-sm text-gray-600">
                 {expense.category} .{expense.amount} .{expense.date}</p>
              </div>
-             <div className="space-x-0.5">
+             <div className="space-x-4">
              <button className="bg-yellow-500 text-white px-3 py-1 rounded"
                onClick={() => onEdit(expense.id)}
              >Edit</button>

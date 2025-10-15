@@ -23,10 +23,12 @@ if(isLoading) return <div>Loading Expenses....</div>
 if(isError) return <div>Error loadinf=g expenses...</div>
   return ( 
     <>
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-gray-50 p-4 ">
       <h1 className="text-2xl font-bold mb-4 bg-primary h-20 flex justify-center items-center ">Expense Tracker</h1>
+     <div className="flex justify-around">
      <ExpenseForm onSuccess={refetch} />
      <ExpenseList expenses={expenses} onSuccess={refetch}/>
+     </div>
      <div className="mt-6 p-4 bg-blue-50 rounded">
       <p className="text-lg font-semibold"
       >Total Monthly Spending: {totalSpent.toLocaleString()} RWF </p>

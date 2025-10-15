@@ -40,7 +40,7 @@ const handleSubmit = (e) => {
 
   return ( <>
   <form onSubmit={handleSubmit}
-  className="max-w-md mx-auto p-6 bg-gray-100 rounded-xl shadow-md flex flex-col gap-4"
+  className="max-w-md  mx-auto p-6 bg-gray-100 w-300 rounded-xl shadow-md flex flex-col gap-4"
   >
     <h2 className="text-xl font-bold">Add Expenses</h2>
     <input 
@@ -49,7 +49,7 @@ const handleSubmit = (e) => {
     placeholder="Expense Title"
     value={expenses.title}
     onChange={handleChange}
-    className="p-2 rounded border bg-emerald-100"
+    className="p-2 rounded border  bg-emerald-100"
     required
     />
     <input 
