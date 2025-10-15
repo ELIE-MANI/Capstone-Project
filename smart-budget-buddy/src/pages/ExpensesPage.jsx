@@ -24,7 +24,7 @@ if(isError) return <div>Error loadinf=g expenses...</div>
   return ( 
     <>
     <div className="min-h-screen bg-gray-50 p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Expense Tracker</h1>
+      <h1 className="text-2xl font-bold mb-4 bg-primary h-20 flex justify-center ">Expense Tracker</h1>
      <ExpenseForm onSuccess={refetch} />
      <ExpenseList expenses={expenses} onSuccess={refetch}/>
      <div className="mt-6 p-4 bg-blue-50 rounded">
