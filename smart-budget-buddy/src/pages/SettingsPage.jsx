@@ -86,7 +86,7 @@ const handleDelete=() => {
         className="border p-2 rounded w-32 "
         >
           <option value="English">English</option>
-          <option value="Spanish">Spanish</option>
+          <option value="Spanish">Kinyarwanda</option>
           <option value="French">French</option>
         </select>
         <div className="flex gap-4 mt-4">
