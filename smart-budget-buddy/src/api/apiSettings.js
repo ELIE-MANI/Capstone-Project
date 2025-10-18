@@ -42,3 +42,17 @@ export async function updateSettings(settings, id) {
   const data = await response.json();
   return data;
 }
+
+export async function deleteSettings(id) {
+  const response = await fetch(`${SETTINGS_API_URL}/${id}`, {
+    method: 'DELETE',
+    headers: {
+      
+      authorization: `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete settings');
+  }
+  return true;
+}
