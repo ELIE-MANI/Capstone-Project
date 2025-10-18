@@ -1,7 +1,11 @@
 const SETTINGS_API_URL = 'https://stub.muindetuva.com/api/settings';
 
 export async function getSettings() {
-  const response = await fetch(SETTINGS_API_URL);
+  const response = await fetch(SETTINGS_API_URL, {
+    headers: {
+      "authorization": `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
+    },
+  });
   if (!response.ok) {
     throw new Error('Failed to fetch settings');
   }
@@ -16,7 +20,7 @@ export async function createSettings(settings) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
+      "authorization": `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
     },
     body: JSON.stringify(settings),
   });
@@ -32,7 +36,7 @@ export async function updateSettings(settings, id) {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
+      "authorization": `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
     },
     body: JSON.stringify(settings),
   });

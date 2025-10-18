@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { use, useEffect, useState } from "react";
-import { createSettings, getSettings } from "../api/apiSettings";
+import { createSettings, deleteSettings, getSettings } from "../api/apiSettings";
 function SettingsPage() {
 const queryClient = useQueryClient();
 
@@ -63,17 +63,12 @@ const handleSubmit = (e) => {
   }
 };
 
-const handleSave = () => {
-  // Logic to save settings
-  alert('Settings have been saved!');
-  console.log('Settings saved:', form);
-};
-const handleDelete = () => {
-  if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-    alert('Account deleted.');
-    console.log('Account deletion confirmed.');
-  }
-};
+const deleteMutation = useMutation({
+  mutationFn: deleteSettings,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['settings'] });
+  },
+});
 
 if (isLoading) {
   return <div>Loading settings...</div>;
@@ -156,12 +151,18 @@ if (isError) {
           >
             Save Changes
           </button>
-          <button
-          type="button"
-          className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700"
-          >
-            Delete Account
-          </button> 
+          {settings && settings.id && (
+            <button
+              type="button"
+              onClick={() => {
+                if (window.confirm("Are you sure you want to delete settings?")) {
+                  deleteMutation.mutate(settings.id);
+                }
+              }}
+            >
+              Delete Settings
+            </button>
+          )}
         </form>
       </div>
     </>
