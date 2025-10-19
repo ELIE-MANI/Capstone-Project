@@ -18,19 +18,28 @@ const data = await response.json();
 };
 
 export async function createSettings(settings) {
-  const response = await fetch(SETTINGS_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      "authorization": `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
-    },
-    body: JSON.stringify(settings),
-  });
-  if (!response.ok) {
-    throw new Error('Failed to create settings');
+  try {
+    const response = await fetch(SETTINGS_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
+      },
+      body: JSON.stringify(settings),
+    });
+
+    const data = await response.json(); // parse JSON even on error
+    if (!response.ok) {
+      console.error("Server responded with:", data);
+      throw new Error(data.message || 'Failed to create settings');
+    }
+
+    return data;
+  } catch (err) {
+    console.error("API error:", err);
+    throw err; // rethrow so React Query's onError catches it
   }
-return await response.json();
-};
+}
 
 export async function updateSettings(id,settings) {
   const response = await fetch(`${SETTINGS_API_URL}/${id}`, {

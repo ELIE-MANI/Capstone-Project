@@ -6,16 +6,18 @@ import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import ExpensesPage from "./pages/ExpensesPage";
 import SettingsPage from "./pages/SettingsPage";
+import Footer from "./components/Footer";
 
 function App() {
   return (
+    <div className="min-h-screen flex flex-col">
     <BrowserRouter>
       {/* Show NavBar only if user is signed in */}
       <SignedIn>
         <NavBar />
       </SignedIn>
-
-      <Routes>
+      <div className="flex-1">     
+         <Routes>
         {/* Public routes */}
         <Route path="/login" element={<SignIn routing="path" path="/login" afterSignInUrl="/" />} />
         <Route path="/signup" element={<SignUp routing="path" path="/signup" afterSignUpUrl="/" />} />
@@ -87,7 +89,10 @@ function App() {
           }
         />
       </Routes>
+      </div>
+      <Footer />  
     </BrowserRouter>
+    </div>
   );
 }
 

@@ -2,12 +2,13 @@ import { useState } from "react";
 import useProfileStore from "../store/Profile";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addExpenses } from "../api/apiExpenses";
+import { useUser } from "@clerk/clerk-react";
 
 
 function ExpenseForm() {
 const queryClient = useQueryClient();
 const {profile}= useProfileStore();
-const [user,isLoaded]= useUser();
+const {user,isLoaded}= useUser();
 
 const [expenses, setExpenses]= useState({
   title: "",
