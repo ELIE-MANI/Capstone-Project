@@ -40,7 +40,7 @@ function ExpenseList({onEdit}) {
              </div>
              <div className="space-x-4">
              <button className="bg-yellow-500 text-white px-3 py-1 rounded"
-               onClick={() => onEdit(expense.id)}
+               onClick={() => onEdit(expense)}
              >Edit</button>
              <button className="bg-red-500 text-white px-3 py-1 rounded"
              onClick={() => {

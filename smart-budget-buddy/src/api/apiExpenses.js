@@ -54,3 +54,25 @@ export async function deleteExpenses(id) {
   return response.json();
   
 }
+export async function updateExpense({ id, expenseData }) {
+  console.log("updateExpense called with:", id, expenseData);
+
+  const response = await fetch(`${EXPENSE_API}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671",
+    },
+    body: JSON.stringify(expenseData),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("Update failed:", errorText);
+    throw new Error("Failed to update expense");
+  }
+
+  return response.json();
+}
+
+
