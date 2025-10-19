@@ -1,4 +1,4 @@
-function BalanceCard({balance}) {
+function BalanceCard({balance=0}) {
 
   const safeBalance = typeof balance === "number" ? balance: 0;
   const healthy = safeBalance >= 100000;

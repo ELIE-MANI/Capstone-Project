@@ -4,22 +4,34 @@ import ExpenseBreakdown from "../components/ExpenseBreakdown";
 import HeroSection from "../components/HeroSection";
 import SummaryCards from "../components/SummaryCards";
 import { getExpenses } from "../api/apiExpenses";
+import { useSettingsStore } from "../store/Profile";
+import { getSettings } from "../api/apiSettings";
 
 function DashboardPage() {
-  const {data:response,isLOading,isError}= useQuery({
+  const {settings} = useSettingsStore()
+  const {data:response,isLoading,isError}= useQuery({
     queryKey:["expenses"],
     queryFn: getExpenses,
   });
-  
-  if (isLOading) return <div className="text-center mt-10">Loading Dashboard data...</div>
-  if (isError)  return <div className="text-center mt-10 text-red-500">Error loading dashboard data..</div>
+
+const {data:settingsData, isLoading:isLoadingSettings, isError:isErrorSettings}= useQuery({
+  queryKey:['settings'],
+  queryFn: getSettings,
+});
+console.log("Settings API response:", settingsData);
+
+  if (isLoading || isLoadingSettings) return <div className="text-center mt-10">Loading Dashboard data...</div>
+  if (isError || isErrorSettings)  return <div className="text-center mt-10 text-red-500">Error loading dashboard data..</div>
   
   const expenses = Array.isArray(response) ? response :response?.data || [];
   const totalExpense = expenses.reduce((sum,exp) => sum + Number(exp.amount || 0),0);
   console.log("Raw response:", response);
   console.log("Normalized expenses array:", expenses);
-  const totalIncome = 4000000;
-  const balance = totalIncome- totalExpense
+  const totalIncome = Array.isArray(settingsData) && settingsData.length > 0
+  ? Number(settingsData[0].monthlyBudget)
+  : 0;
+
+  const balance = totalIncome - totalExpense;
   return ( 
     <>
     <HeroSection/>
@@ -29,6 +41,7 @@ function DashboardPage() {
     <ExpenseBreakdown expenses={expenses} />
     </div>
     <BalanceCard balance={balance} />
+  
       
     </div>
 

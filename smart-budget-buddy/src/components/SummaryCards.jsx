@@ -1,8 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSettingsStore } from "../store/Profile";
 import carChart from "../images/Group 442.svg"
-import { getExpenses } from "../api/apiExpenses";
 
-function SummaryCards({totalIncome,totalExpense,balance}) {
+
+function SummaryCards({totalIncome=0,totalExpense=0,balance=0}) {
+
+
+const budgetUsedPercent = totalIncome? Math.min((totalExpense / totalIncome) * 100,100):0;
+const savingsPercent=totalIncome? Math.min((balance / totalIncome) * 100,100):0;
 
   return (
 <>
@@ -33,6 +37,8 @@ function SummaryCards({totalIncome,totalExpense,balance}) {
 <p className="mt-4 text-sm text-black font-semibold text-center mb-2">Track Your Monthly Cash Flow</p>
 </div>
 
+    
+  
 </>
   );
 }

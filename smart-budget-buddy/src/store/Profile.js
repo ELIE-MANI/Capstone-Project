@@ -30,10 +30,12 @@ const useSettingsStore = create((set) => ({
 
   },
   setSettings: (settings) => set({ settings}),
+  
   updateSettings: (field,value) =>
     set((state) => ({
       settings:{...state.settings,[field]:value},
     })),
-}))
+
+  }))
 export {useSettingsStore};
 export default useProfileStore;
