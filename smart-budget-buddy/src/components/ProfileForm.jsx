@@ -2,22 +2,38 @@ import { useUser } from "@clerk/clerk-react";
 import useProfileStore from "../store/Profile";
 import { saveProfile } from "../api/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useState } from "react";
+
 
 function ProfileForm() {
   const { user, isLoaded } = useUser();
- const { profile, updateProfile } = useProfileStore();
+ const { profile, updateProfile,setProfile } = useProfileStore();
  const queryClient = useQueryClient ();
+
+ const [password, setPassword] = useState("");
+
+ useEffect(() => {
+  if (isLoaded && user) {
+    setProfile({
+      name: user.fullName || "",
+      email: user.primaryEmailAddress?.emailAddress || "",
+    });
+  }
+}, [isLoaded, user, setProfile]);
 
  const mutation = useMutation ({
   mutationFn: saveProfile,
   onSuccess: () => {
     queryClient.invalidateQueries(["profile"]);
     alert("Profile updated successfully!");
+    setTimeout(() => mutation.reset(), 3000);
   },
   onError: (error) => {
     alert("Error updating profile: " + error.message);
   },
 });
+ 
 
   const handleUpdate = async () => {
     if (!isLoaded || !user) {
@@ -27,16 +43,24 @@ function ProfileForm() {
 
     try {
       await user.update({
-        name: profile.name.split(" ")[0] || "",
-        email: [{id: user.primaryEmailAddress.id, emailAddress: profile.email}],
-      
+        username: profile.name || "",
+        
       });
-      mutation.mutate(profile);
-    }
-    catch (error) {
-      alert("Error updating user in Clerk: " + error.message);
-    }
-  };
+      if (password) {
+        await user.updatePassword({ password });
+        alert("Password updated successfully!");
+      
+      }
+
+    mutation.mutate(profile);
+    alert("User profile updated in Clerk successfully.");
+     setPassword("");
+  }
+  catch (error) {
+    alert("Error updating user in Clerk: " + error.message);
+  }
+};
+
 
   return (
     <div className="max-w-md mx-auto p-6 text-black rounded-xl shadow-md">
@@ -51,15 +75,15 @@ function ProfileForm() {
         value={profile.name}
         onChange={(e) => updateProfile("name", e.target.value)}
         />
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Email (readOnly)</label>
         <input className="bg-emerald-100 rounded p-2"
           type="email"
           id="email"
           placeholder="Email"
           value={profile.email}
-          onChange={(e) => updateProfile("email", e.target.value)}
+          readOnly
         />
-        <label htmlFor="phone">Phone Number</label>
+      {/*  <label htmlFor="phone">Phone Number</label>
         <input className="bg-emerald-100 rounded p-2"
           type="tel"
           id="phone"
@@ -74,6 +98,16 @@ function ProfileForm() {
           placeholder="Address"
           value={profile.address}
           onChange={(e) => updateProfile("address", e.target.value)}
+        />
+        */}
+            <label htmlFor="password">New Password</label>
+        <input
+          className="bg-emerald-100 rounded p-2"
+          type="password"
+          id="password"
+          placeholder="Enter new password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
          
         <button className="bg-primary text-black w-40 h-12 rounded-2xl cursor-pointer" 
