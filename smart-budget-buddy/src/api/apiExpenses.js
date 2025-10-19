@@ -1,7 +1,11 @@
+import { useUser } from "@clerk/clerk-react";
+
 const EXPENSE_API ='https://stub.muindetuva.com/api/expenses'
 
-export async function getExpenses() {
-  const response = await fetch(EXPENSE_API,
+
+export async function getExpenses(userId) {
+  const url = userId ? `${EXPENSE_API}?userId=${userId}` : EXPENSE_API;
+  const response = await fetch(url,
   {
     headers:
     {

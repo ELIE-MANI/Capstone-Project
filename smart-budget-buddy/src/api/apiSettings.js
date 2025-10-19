@@ -1,7 +1,9 @@
+  import { useUser } from "@clerk/clerk-react";
 const SETTINGS_API_URL = "/api/settings";
 
-export async function getSettings() {
-  const response = await fetch(SETTINGS_API_URL, {
+export async function getSettings(userId) {
+  const url = userId ? `${SETTINGS_API_URL}?userId=${userId}` : SETTINGS_API_URL;
+  const response = await fetch(url, {
     headers: {
       "authorization": `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
     },

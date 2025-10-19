@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import phoneImage from "../images/col-md-6.svg"
 import bgImage from "../images/Vector 2.svg"
 
@@ -14,12 +15,12 @@ function HeroSection() {
         and gain insights into your spending habits.
       </p>
       <div className="space-x-4">
-     <button className="bg-primary text-white px-4 py-2  rounded-lg">
+     <Link to="/expenses" className="bg-primary text-white px-6 py-4  rounded-lg">
       Add Expenses
-     </button>
-     <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-      Add Income
-     </button>
+     </Link>
+     <Link to="/settings" className="bg-blue-500 text-white px-6 py-4 rounded-lg">
+      Add Budget
+     </Link>
      </div>
     </div>
 

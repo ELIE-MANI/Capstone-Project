@@ -4,19 +4,21 @@ import ExpenseBreakdown from "../components/ExpenseBreakdown";
 import HeroSection from "../components/HeroSection";
 import SummaryCards from "../components/SummaryCards";
 import { getExpenses } from "../api/apiExpenses";
-import { useSettingsStore } from "../store/Profile";
+import { useUser } from "@clerk/clerk-react";
 import { getSettings } from "../api/apiSettings";
 
 function DashboardPage() {
-  const {settings} = useSettingsStore()
+  const {user, isLoaded} = useUser();
   const {data:response,isLoading,isError}= useQuery({
-    queryKey:["expenses"],
-    queryFn: getExpenses,
+    queryKey:["expenses", user?.id],
+    queryFn: () => getExpenses(user.id),
+    enabled: isLoaded && !!user,
   });
 
 const {data:settingsData, isLoading:isLoadingSettings, isError:isErrorSettings}= useQuery({
-  queryKey:['settings'],
-  queryFn: getSettings,
+  queryKey:['settings', user?.id],
+  queryFn: () => getSettings(user.id),
+  enabled: isLoaded && !!user,
 });
 console.log("Settings API response:", settingsData);
 

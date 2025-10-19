@@ -7,6 +7,7 @@ import { addExpenses } from "../api/apiExpenses";
 function ExpenseForm() {
 const queryClient = useQueryClient();
 const {profile}= useProfileStore();
+const [user,isLoaded]= useUser();
 
 const [expenses, setExpenses]= useState({
   title: "",
@@ -31,9 +32,13 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
   e.preventDefault();
+  if (!isLoaded || !user) {
+    alert("Clerk user not loaded yet. Try again in a moment.");
+    return;
+  }
   mutation.mutate({
     ...expenses,
-    userId: profile.id || '1',
+    userId: user.id || '1',
     date: new Date().toISOString(),
   });
 };

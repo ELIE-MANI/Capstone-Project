@@ -20,7 +20,7 @@ const savingsPercent=totalIncome? Math.min((balance / totalIncome) * 100,100):0;
 
 <div className="flex flex-col gap-3 text-sm text-gray-800">
   <p>
-    <span className="font-semibold">Total Income:</span>{''}
+    <span className="font-semibold">Monthly Budget:</span>{''}
     <span className="text-emerald-600">{totalIncome.toLocaleString()}RWF</span>
   </p>
 <p>

@@ -4,9 +4,9 @@ function NavBar() {
   return ( 
   <>
   <nav className="flex items-center justify-between py-4 px-6 bg-secondary shadow-sm ">
-    <h1 className="text-xl font-bold text-gray-900 ">
+    <Link to="/" className="text-xl font-bold text-gray-900 ">
       Smart <span className="text-emerald-500">Budget Buddy</span>
-    </h1>
+    </Link>
     <ul className="flex items-center space-x-6 font-semibold">
   <li><Link to='/' className=" transition delay-300 border-b-2 border-transparent hover:border-white">Dashboard</Link></li>
   <li><Link to='/profile' className="transition delay-300 border-b-2 border-transparent hover:border-white">Profile</Link></li>
