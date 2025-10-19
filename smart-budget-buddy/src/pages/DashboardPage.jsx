@@ -28,7 +28,7 @@ function DashboardPage() {
     <div className="">
     <ExpenseBreakdown expenses={expenses} />
     </div>
-    <BalanceCard/>
+    <BalanceCard balance={balance} />
       
     </div>
 

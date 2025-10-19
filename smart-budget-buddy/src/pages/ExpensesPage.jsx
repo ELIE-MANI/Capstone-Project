@@ -16,11 +16,11 @@ const expenses =data || [];
 
 
 const totalSpent = expenses.reduce((sum,expense) => sum + Number(expense.amount), 0);
-const  remaining = profile?.monthlyBudget
-? profile.monthlyBudget - totalSpent : 0;
+const totalBudget = 400000;
+const  remaining = totalBudget - totalSpent;
 
 if(isLoading) return <div>Loading Expenses....</div>
-if(isError) return <div>Error loadinf=g expenses...</div>
+if(isError) return <div>Error loading expenses...</div>
   return ( 
     <>
     <div className="min-h-screen bg-gray-50 p-4 ">

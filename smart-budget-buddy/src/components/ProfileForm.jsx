@@ -1,9 +1,10 @@
-
+import { useUser } from "@clerk/clerk-react";
 import useProfileStore from "../store/Profile";
 import { saveProfile } from "../api/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function ProfileForm() {
+  const { user, isLoaded } = useUser();
  const { profile, updateProfile } = useProfileStore();
  const queryClient = useQueryClient ();
 
@@ -18,17 +19,30 @@ function ProfileForm() {
   },
 });
 
-  const handleUpdate = () => {
-   console.log('Updating profile:', profile);
-    mutation.mutate(profile);
-    
+  const handleUpdate = async () => {
+    if (!isLoaded || !user) {
+      alert("Clerk user not loaded yet. Try again in a moment.");
+      return;
+    }
+
+    try {
+      await user.update({
+        name: profile.name.split(" ")[0] || "",
+        email: [{id: user.primaryEmailAddress.id, emailAddress: profile.email}],
+      
+      });
+      mutation.mutate(profile);
+    }
+    catch (error) {
+      alert("Error updating user in Clerk: " + error.message);
+    }
   };
 
   return (
     <div className="max-w-md mx-auto p-6 text-black rounded-xl shadow-md">
       <h2 className="text-lg font-bold mb-4 ">Account Settings</h2>
       <div className="flex flex-col gap-4">
-
+       
         <label htmlFor="name">User Name</label>
         <input className="bg-emerald-100 rounded p-2"
         type="text"
@@ -63,7 +77,11 @@ function ProfileForm() {
         />
          
         <button className="bg-primary text-black w-40 h-12 rounded-2xl cursor-pointer" 
+        disabled={mutation.isLoading}
         onClick={handleUpdate}>{mutation.isLoading ? "Updating..." : "Update Profile"}</button>
+        
+        {mutation.isSuccess && <p className="text-green-600 mt-2">Profile updated successfully!</p>}
+        {mutation.isError && <p className="text-red-600 mt-2">{mutation.error.message}</p>}
       </div>
     </div>
   );
