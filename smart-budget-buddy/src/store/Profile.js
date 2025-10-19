@@ -19,8 +19,21 @@ const useProfileStore = create((set) => ({
   
 
 }))
+const useSettingsStore = create((set) => ({
+  settings: {
+    id: new Date().getTime(),
+    monthlyBudget: 0,   
+    savingsGoal: 0,
+    currency: '',
+    budgetAlert: false,
+    expenseReminder: false,
 
-
-
-
+  },
+  setSettings: (settings) => set({ settings}),
+  updateSettings: (field,value) =>
+    set((state) => ({
+      settings:{...state.settings,[field]:value},
+    })),
+}))
+export {useSettingsStore};
 export default useProfileStore;

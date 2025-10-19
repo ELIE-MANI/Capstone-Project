@@ -1,4 +1,4 @@
-const SETTINGS_API_URL = 'https://stub.muindetuva.com/api/settings';
+const SETTINGS_API_URL = "/api/settings";
 
 export async function getSettings() {
   const response = await fetch(SETTINGS_API_URL, {
@@ -27,18 +27,17 @@ export async function createSettings(settings) {
   if (!response.ok) {
     throw new Error('Failed to create settings');
   }
-  const data = await response.json();
-  return data;
+return await response.json();
 };
 
-export async function updateSettings(settings, id) {
+export async function updateSettings(id,settings) {
   const response = await fetch(`${SETTINGS_API_URL}/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       "authorization": `Bearer 18|Z1srREflaNDzrbEGwkBvV8ZLuDWH0MksuFX0gUFo10786671`,
     },
-    body: JSON.stringify(settings),
+    body: JSON.stringify({ id, ...settings }),
   });
   if (!response.ok) {
     throw new Error('Failed to update settings');
